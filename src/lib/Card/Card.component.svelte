@@ -1,15 +1,44 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
   import type { ICard } from "./Card";
 
   export let card: ICard;
+  let image = "";
+
+  const dispatch = createEventDispatcher();
+
+  function cardClicked() {
+    if (card.revealed) {
+      dispatchSelectedEvent();
+    } else {
+      card.revealed = true;
+    }
+  }
+
+  function dispatchSelectedEvent() {
+    dispatch("card-selected", {
+      card,
+    });
+  }
+
+  $: {
+    image = card.revealed ? card.imageFront : card.imageBack;
+  }
 </script>
 
-{#if card}
-  <img src={card.image} alt={card.title} />
-{/if}
+<div class="card">
+  {#if card}
+    <img src={image} alt={card.title} on:click={cardClicked} />
+  {/if}
+</div>
 
 <style>
-  img {
+  .card {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .card img {
     width: 139px;
     height: 209px;
   }
