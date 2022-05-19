@@ -1,17 +1,38 @@
 <script lang="ts">
   import logo from "./assets/svelte.png";
-  import { CardComponent } from "./lib/Card";
+  import { CardComponent, ICard } from "./lib/Card";
   import { StandardDeck } from "./lib/StandardDeck";
 
   const standardDeck = StandardDeck.createCompleteDeck().shuffle().shuffle();
-  let cards = standardDeck.deal(4);
+  let tableCards: ICard[] = standardDeck.deal(4, { revealed: true });
+  let handCards: ICard[] = [];
+
+  function cardSelected(event) {
+    const card: ICard = event.detail.card;
+    console.log(card.title);
+    handCards = [...handCards, card];
+    tableCards = tableCards.filter((c) => c.id !== card.id);
+  }
+
+  function deal() {
+    tableCards = [...tableCards, ...standardDeck.deal(1, { revealed: true })];
+  }
 </script>
 
 <main>
-  <h1>Card Game</h1>
-  {#each cards as card}
-    <CardComponent {card} />
-  {/each}
+  <h1>Table</h1>
+  <section class="cards-container">
+    {#each tableCards as card}
+      <CardComponent {card} on:card-selected={cardSelected} />
+    {/each}
+  </section>
+  <h1>Hand</h1>
+  <section class="cards-container">
+    {#each handCards as card}
+      <CardComponent {card} />
+    {/each}
+  </section>
+  <button on:click={deal}>Deal</button>
 </main>
 
 <style>
@@ -20,5 +41,13 @@
     margin: 0px auto;
     font-family: sans-serif;
     text-align: center;
+  }
+
+  .cards-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    min-height: 200px;
   }
 </style>
