@@ -1,4 +1,6 @@
-export class Deck<T> {
+import type { ICard } from "../Card";
+
+export class Deck<T extends ICard> {
   private cards: T[];
 
   constructor(cards: T[]) {
@@ -10,7 +12,11 @@ export class Deck<T> {
     return this;
   }
 
-  public deal(n: number): T[] {
-    return this.cards.splice(0, n);
+  public deal(n: number, options?: { revealed: boolean }): T[] {
+    const dealedCards = this.cards.splice(0, n);
+    if (options) {
+      dealedCards.forEach((c) => (c.revealed = options.revealed || false));
+    }
+    return dealedCards;
   }
 }
