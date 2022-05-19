@@ -1,4 +1,4 @@
-import type { ICard } from "../Card";
+import type { Card } from "../Card";
 
 export type Suit = "clubs" | "spades" | "hearts" | "diamonds";
 
@@ -17,7 +17,7 @@ export type Rank =
   | "Q"
   | "K";
 
-export class StandardCard implements ICard {
+export class StandardCard implements Card {
   readonly suit: Suit;
   readonly rank: Rank;
   public revealed: boolean;

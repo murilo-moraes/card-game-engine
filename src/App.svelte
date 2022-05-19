@@ -1,14 +1,14 @@
 <script lang="ts">
   import logo from "./assets/svelte.png";
-  import { CardComponent, ICard } from "./lib/Card";
+  import { CardComponent, Card } from "./lib/Card";
   import { StandardDeck } from "./lib/StandardDeck";
 
   const standardDeck = StandardDeck.createCompleteDeck().shuffle().shuffle();
-  let tableCards: ICard[] = standardDeck.deal(4, { revealed: true });
-  let handCards: ICard[] = [];
+  let tableCards: Card[] = standardDeck.deal(4, { revealed: true });
+  let handCards: Card[] = [];
 
   function cardSelected(event) {
-    const card: ICard = event.detail.card;
+    const card: Card = event.detail.card;
     console.log(card.title);
     handCards = [...handCards, card];
     tableCards = tableCards.filter((c) => c.id !== card.id);

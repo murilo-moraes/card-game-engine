@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import type { ICard } from "./Card";
+  import type { Card } from "./Card";
 
-  export let card: ICard;
+  export let card: Card;
   let image = "";
 
   const dispatch = createEventDispatcher();

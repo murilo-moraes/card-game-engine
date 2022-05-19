@@ -1,6 +1,6 @@
-import type { ICard } from "../Card";
+import type { Card } from "../Card";
 
-export class Deck<T extends ICard> {
+export class Deck<T extends Card> {
   private cards: T[];
 
   constructor(cards: T[]) {

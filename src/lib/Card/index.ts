@@ -1,4 +1,4 @@
 import CardComponent from "./Card.component.svelte";
-import type { ICard } from "./Card";
+import type { Card } from "./Card";
 
-export { CardComponent, ICard };
+export { CardComponent, Card };
