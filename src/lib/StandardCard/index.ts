@@ -20,17 +20,27 @@ export type Rank =
 export class StandardCard implements ICard {
   readonly suit: Suit;
   readonly rank: Rank;
+  public revealed: boolean;
 
-  constructor(suit: Suit, rank: Rank) {
+  constructor(suit: Suit, rank: Rank, revealed: boolean = false) {
     this.suit = suit;
     this.rank = rank;
+    this.revealed = revealed;
+  }
+
+  get id(): string {
+    return `${this.rank}-${this.suit}`;
   }
 
   get title(): string {
-    return `${this.rank} of ${this.suit}s`;
+    return `${this.rank} of ${this.suit}`;
   }
 
-  get image(): string {
+  get imageFront(): string {
     return `/cards/${this.suit}/${this.rank}.png`;
+  }
+
+  get imageBack(): string {
+    return `/cards/back.png`;
   }
 }
