@@ -1,10 +1,10 @@
 <script lang="ts">
   import logo from "./assets/svelte.png";
   import { CardComponent } from "./lib/Card";
-  import { Deck } from "./lib/Deck";
+  import { StandardDeck } from "./lib/StandardDeck";
 
-  const deck = Deck().shuffle();
-  let cards = deck.deal(52);
+  const standardDeck = StandardDeck.createCompleteDeck().shuffle().shuffle();
+  let cards = standardDeck.deal(4);
 </script>
 
 <main>

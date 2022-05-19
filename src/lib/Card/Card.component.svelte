@@ -2,14 +2,10 @@
   import type { ICard } from "./Card";
 
   export let card: ICard;
-
-  const imagePath = (): string => {
-    return `/cards/${card.getSuit()}/${card.getValue()}.png`;
-  };
 </script>
 
 {#if card}
-  <img src={imagePath()} alt={card.toString()} />
+  <img src={card.image} alt={card.title} />
 {/if}
 
 <style>

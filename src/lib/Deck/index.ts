@@ -1,34 +1,16 @@
-import { Card, ICard } from "../Card/Card";
-import { randomCard, suitsArray, valuesArray } from "../Card/Card";
+export class Deck<T> {
+  private cards: T[];
 
-export interface IDeck {
-  shuffle: () => IDeck;
-  deal: (n: number) => ICard[];
-}
-
-function getCompleteDeck(): ICard[] {
-  const cards: ICard[] = [];
-  suitsArray().forEach((suit) => {
-    valuesArray().forEach((value) => {
-      cards.push(Card({ suit, value }));
-    });
-  });
-  return cards;
-}
-
-export function Deck(initCards: ICard[] | undefined = undefined): IDeck {
-  const cards = initCards || getCompleteDeck();
-
-  function shuffle(): IDeck {
-    return Deck(cards.sort(() => Math.random() - 0.5));
+  constructor(cards: T[]) {
+    this.cards = cards;
   }
 
-  function deal(n: number): ICard[] {
-    return cards.slice(0, n);
+  public shuffle(): Deck<T> {
+    this.cards = this.cards.sort(() => Math.random() - 0.5);
+    return this;
   }
 
-  return {
-    shuffle,
-    deal,
-  };
+  public deal(n: number): T[] {
+    return this.cards.splice(0, n);
+  }
 }
