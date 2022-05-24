@@ -1,7 +1,7 @@
 <script lang="ts">
   import logo from "./assets/svelte.png";
-  import { CardComponent, Card } from "./lib/Card";
-  import { StandardDeck } from "./lib/StandardDeck";
+  import { CardComponent, Card } from "./lib/Engine/Card";
+  import { StandardDeck } from "./lib/Engine/StandardDeck";
 
   const standardDeck = StandardDeck.createCompleteDeck().shuffle().shuffle();
   let tableCards: Card[] = standardDeck.deal(4, { revealed: true });
