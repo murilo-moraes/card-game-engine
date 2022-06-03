@@ -1,53 +1,65 @@
 <script lang="ts">
   import logo from "./assets/svelte.png";
+  import { StandardCard } from "./lib/Engine";
   import { CardComponent, Card } from "./lib/Engine/Card";
-  import { StandardDeck } from "./lib/Engine/StandardDeck";
+  import { Game } from "./lib/Regicide/Game";
 
-  const standardDeck = StandardDeck.createCompleteDeck().shuffle().shuffle();
-  let tableCards: Card[] = standardDeck.deal(4, { revealed: true });
-  let handCards: Card[] = [];
-
-  function cardSelected(event) {
-    const card: Card = event.detail.card;
-    console.log(card.title);
-    handCards = [...handCards, card];
-    tableCards = tableCards.filter((c) => c.id !== card.id);
-  }
-
-  function deal() {
-    tableCards = [...tableCards, ...standardDeck.deal(1, { revealed: true })];
-  }
+  let game = new Game(1);
+  let unrevealedCard = new StandardCard("clubs", "A", false);
 </script>
 
 <main>
-  <h1>Table</h1>
-  <section class="cards-container">
-    {#each tableCards as card}
-      <CardComponent {card} on:card-selected={cardSelected} />
+  {#if game}
+    <section class="stage-area">
+      <section>
+        <h1>Castle</h1>
+        <CardComponent card={game.activeCastleCard} />
+      </section>
+      <section>
+        <h1>Tavern</h1>
+        <CardComponent card={unrevealedCard} />
+      </section>
+      <section>
+        <h1>Discard</h1>
+        {#if game.discardPileShowingCard}
+          <CardComponent card={game.discardPileShowingCard} />
+        {/if}
+      </section>
+    </section>
+    <hr />
+    <h1>Players Hands</h1>
+    {#each game.playersHands as hand}
+      <section class="cards-container">
+        {#each hand.show() as card}
+          <CardComponent {card} />
+        {/each}
+      </section>
     {/each}
-  </section>
-  <h1>Hand</h1>
-  <section class="cards-container">
-    {#each handCards as card}
-      <CardComponent {card} />
-    {/each}
-  </section>
-  <button on:click={deal}>Deal</button>
+  {/if}
 </main>
 
 <style>
   main {
-    width: 1080px;
-    margin: 0px auto;
+    max-width: 1080px;
+    margin: 0.5rem auto;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
     font-family: sans-serif;
     text-align: center;
+    background-color: rgb(240, 248, 255, 0.5);
   }
 
   .cards-container {
     display: flex;
-    justify-content: flex-start;
-    gap: 16px;
+    justify-content: space-around;
+    gap: 1rem;
     flex-wrap: wrap;
     min-height: 200px;
+  }
+
+  .stage-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 48px;
   }
 </style>
