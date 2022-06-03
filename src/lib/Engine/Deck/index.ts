@@ -15,7 +15,10 @@ export class Deck<T extends Card> {
 
   public deal(n: number, options?: { revealed: boolean }): DealResult<T> {
     return {
-      dealedCards: this.cards.slice(0, n),
+      dealedCards: this.cards.slice(0, n).map((card) => {
+        card.revealed = options?.revealed || false;
+        return card;
+      }),
       remainingDeck: new Deck<T>(this.cards.slice(n)),
     };
   }
