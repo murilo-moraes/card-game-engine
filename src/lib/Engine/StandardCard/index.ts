@@ -43,4 +43,8 @@ export class StandardCard implements Card {
   get imageBack(): string {
     return `/cards/back.png`;
   }
+
+  static suitsArray(): Suit[] {
+    return ["clubs", "spades", "hearts", "diamonds"];
+  }
 }
