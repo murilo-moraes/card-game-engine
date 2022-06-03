@@ -39,7 +39,7 @@
   }
 
   .card img {
-    width: 139px;
-    height: 209px;
+    width: 62px;
+    height: 94px;
   }
 </style>
