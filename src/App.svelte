@@ -9,25 +9,26 @@
 </script>
 
 <main>
+  <h1>Regicide</h1>
   {#if game}
     <section class="stage-area">
       <section>
-        <h1>Castle</h1>
+        <h2>Castle</h2>
         <CardComponent card={game.activeCastleCard} />
       </section>
       <section>
-        <h1>Tavern</h1>
+        <h2>Tavern</h2>
         <CardComponent card={unrevealedCard} />
       </section>
       <section>
-        <h1>Discard</h1>
+        <h2>Discard</h2>
         {#if game.discardPileShowingCard}
           <CardComponent card={game.discardPileShowingCard} />
         {/if}
       </section>
     </section>
     <hr />
-    <h1>Players Hands</h1>
+    <h2>Players Hands</h2>
     {#each game.playersHands as hand}
       <section class="cards-container">
         {#each hand.show() as card}
